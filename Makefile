@@ -41,7 +41,6 @@ html: clean $(OUTPUTDIR)/index.html
 
 $(OUTPUTDIR)/%.html:
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(CONFFILE) $(PELICANOPTS)
-	cp -rv static/* output
 
 clean:
 	find $(OUTPUTDIR) -mindepth 1 -delete

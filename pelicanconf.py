@@ -3,7 +3,7 @@
 
 AUTHOR = u'Leo team'
 SITENAME = u'Leo Blog'
-SITEURL = 'http://leo-editor.github.io'
+#SITEURL = 'http://leo-editor.github.io'
 
 TIMEZONE = 'Europe/Paris'
 

@@ -8,6 +8,8 @@ def publish():
 	if not os.path.isdir(tgt):
 		print("You need to check out https://github.com/leo-editor/leo-editor.github.io to " + tgt)
 		return
+	with lcd(root_dir):
+		local("make publish")
 	gen_dir = pj(root_dir, 'output')
 	with lcd(tgt):
 		local("git pull")

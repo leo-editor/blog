@@ -15,6 +15,7 @@ def publish():
 	local("cp -rv %s/* %s" % (gen_dir, tgt))
 	with lcd(tgt):
 		local("git add -A")
+		local("git commit")
 		local("git push origin master")
 
 

@@ -14,7 +14,7 @@ A PNG image of the main Leo window, without window manager decorations,
 is saved in ``$HOME/.leo/screen_captures/YYYY-MM-DDTHH:MM:SS.png``
 Here's an example:
 
-.. image:: static/images/plugins/screen_capture/screen_capture0.png
+.. image:: /static/images/plugins/screen_capture/screen_capture0.png
 
 ``screen_capture_now`` captures an image immediately,
 ``screen_capture_5sec`` waits five seconds, so you can position the

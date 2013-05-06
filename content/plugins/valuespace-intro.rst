@@ -113,17 +113,49 @@ In addition to reading or writing the data, both @vsi and @vso store the data as
 Making data visible in the outline
 ==================================
 
-It's often useful to display the data in your Leo outline. You can use `@r expr` construct to evaluate a python expression and put the result of evaluation in the body.
+It's often useful to display the data in your Leo outline. You can use `@r expr` construct to evaluate a python expression and put the result of evaluation in the body of the node.
 
 E.g.
 
-H
-.. code-block::
-	@r mystr.upper()
 
-B
-.. code-block::
+
+**@r mystr.upper()**
+
+::
+
 	HELLO WORLD
+
+Anchors
+=======
+
+To make valuespace scale to large Leo documents, not every node gets parsed for @x contstructs. To instruct vs-update to scan the body of a node for @x consructs, you need to add an "anchor" (node with @a as headline) as a child of that node. So your outline would look like this:
+
+- Foo
+- Bar
+
+  - Baz
+  - @a
+
+- Quux
+- Xyzzy
+- @r myvar
+
+Here, only node "Bar" would have its body text scanned during vs-update. `@r myvar` would get evaluated despite the lack of the anchor, since it's headline-level construct that doesn't require parsing of the body.
+
+You can also give anchors a name; if you have an outline like this:
+
+- Foo
+- Bar
+
+  - @a myvar
+
+the contents (body) of node "Bar" would get assigned to variable 'myvar' (as string), **and** the body of node Bar gets scanned for @x tags.
+
+
+
+
+
+
 
 
 

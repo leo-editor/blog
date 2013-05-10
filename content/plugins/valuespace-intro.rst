@@ -1,7 +1,7 @@
 Valuespace, the spreadsheet in your outliner
 ############################################
 
-:date: 2013-04-05 22:34
+:date: 2013-05-10 22:34
 :tags: plugins
 :category: plugins
 :slug: valuespace-intro

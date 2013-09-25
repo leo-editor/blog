@@ -25,7 +25,7 @@ Next, write your article.  This is a simple RST file in the content/ directory:
     cd your-category/
     vi your_article.rst
 
-You can use Leo to edit the article, but I'd recommend using @edit, or @shadow.  Not sure how well Pelican handles sentinels.
+You can use Leo to edit the article, but I'd recommend using @auto-rst.  Not sure how well Pelican handles sentinels.
 
 At the top of your article, you need a title, and then a few bits of info for Pelican to process your article correctly.  Here's an example from the custom_printing.rst article:
 

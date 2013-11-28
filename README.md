@@ -1,19 +1,16 @@
 leo-blog
 ========
 
-Blog source code
+Source code for publishing to the [Leo Editor Blog](http://leo-editor.github.io/ "Leo Editor Blog").
+The Leo Editor itself is at http://leoeditor.com
 
-To read the blog head over to http://leo-editor.github.io/
 
-
-How to publish on the Leo blog
-------------------------------
 
 ### Initial Setup ###
 
-First, you need to be added to the leo-editor organization here on github.  Ask in the leo-editor google group and one of us will add you.
+First, you need to be added to the leo-editor organization here on github.  Ask in the [leo-editor google group](https://groups.google.com/forum/#!forum/leo-editor) and one of us will add you.
 
-Second, you need to clone two repos: this one, and leo-editor/leo-editor.github.io.
+Second, you need to clone two repos: this one, and `leo-editor/leo-editor.github.io`.
 
     git clone git@github.com:leo-editor/leo-blog.git
     git clone git@github.com:leo-editor/leo-editor.github.io.git

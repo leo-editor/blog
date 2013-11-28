@@ -26,3 +26,8 @@ LINKS =  (('Leo project website', 'http://leoeditor.com/'),
 STATIC_PATHS = ['images',]
 
 DEFAULT_PAGINATION = 10
+
+# markdown config, see options at:
+#   http://docs.getpelican.com/en/3.3.0/settings.html
+#   http://pythonhosted.org/Markdown/extensions/ 
+MD_EXTENSIONS = (['codehilite(css_class=highlight)','extra', 'nl2br', 'sane_lists'])

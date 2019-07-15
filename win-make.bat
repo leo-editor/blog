@@ -4,10 +4,10 @@
 @setlocal
 @set _p=%prompt%
 @set "prompt=$G$_"
-rmdir /s/q doc
-mkdir doc
+rmdir /s/q docs
+mkdir docs
 
-pelican content -o doc -s pelicanconf.py
+pelican content -o docs -s pelicanconf.py
 
 @echo.
 @echo. --- Starting local server

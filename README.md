@@ -65,17 +65,18 @@ Some machines might not have make, so the following command will work to build t
 
 linux:
 
-    rm -r -f doc
-    mkdir doc
-    /path/to/pelican content -o doc -s pelicanconf.py
-    cd doc
+    rm -r -f docs
+    mkdir docs
+    /path/to/pelican content -o docs -s pelicanconf.py
+    cd docs
     python -m http.server
 
 Windows:
 
-    rmdir /s/q doc
-    pelican content -o doc -s pelicanconf.py
-    cd doc
+    rmdir /s/q docs
+    mkdir docs
+    pelican content -o docs -s pelicanconf.py
+    cd docs
     python -m http.server    
 
 #### Commit source files ####

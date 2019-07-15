@@ -1,7 +1,7 @@
 leo-blog
 ========
 
-Source code for publishing to the [Leo Editor Blog](http://leo-editor.github.io/ "Leo Editor Blog").
+Source code for publishing to the [Leo Editor Blog](http://leo-editor.github.io/blog "Leo Editor Blog").
 The Leo Editor itself is at http://leoeditor.com
 
 
@@ -10,11 +10,10 @@ The Leo Editor itself is at http://leoeditor.com
 
 First, you need to be added to the leo-editor organization here on github.  Ask in the [leo-editor google group](https://groups.google.com/forum/#!forum/leo-editor) and one of us will add you.
 
-Second, you need to clone two repos: this one, and `leo-editor/leo-editor.github.io`.
+Second, clone this repo:
 
     git clone git@github.com:leo-editor/leo-blog.git
-    git clone git@github.com:leo-editor/leo-editor.github.io.git
-
+    
 After this, be sure to install Pelican:
 
     pip install pelican
@@ -22,21 +21,18 @@ After this, be sure to install Pelican:
 
 ### Daily Use ###
 
-    1. Sync local working copies
+    1. Sync local working copy
     2. Write your article
     3. Preview
     4. Commit source files
-    5. Publish
+    5. Check public url
 
 
 #### Sync local working copies ####   
-Before you do any work, be sure that you have the newest copies of both repositories:
+Before you do any work, be sure that you have the newest copy of the repository:
 
     cd leo-blog
     git pull
-    cd ../leo-editor.github.io
-    git pull
-
 
 #### Write your article ####
 This is a simple RST file in the content/ directory:
@@ -67,29 +63,31 @@ To preview your doc, you can use `make devserv` to start a local instance of Sim
 
 Some machines might not have make, so the following command will work to build the docs and view your article instead:
 
-    mkdir output
-    /path/to/pelican content -o output -s pelicanconf.py
-    cd output
-    python -m SimpleHTTPServer
+linux:
 
+    rm -r -f doc
+    mkdir doc
+    /path/to/pelican content -o doc -s pelicanconf.py
+    cd doc
+    python -m http.server
+
+Windows:
+
+    rmdir /s/q doc
+    pelican content -o doc -s pelicanconf.py
+    cd doc
+    python -m http.server    
 
 #### Commit source files ####
 Add your source document to github's copy of this repo:
 
-    cd ../leo-blog
     git add .
     git commit -am "Added article on blahblahblah."
     git push
 
 
-#### Publish to World ####
-After you're satisfied with the results, it's time to publish to github.io:
+#### Check public view ####
 
-    cp -r output/* ../leo-editor.github.io/
-    cd ../leo-editor.github.io
-    git add .
-    git commit -am "Added article on blahblahblah."
-    git push
-
+Point a browser at http://leo-editor.github.io/blog
 
 That's it.  If you have any questions, ask away on the leo-editor google group.  We're pretty friendly :) 

@@ -9,8 +9,8 @@ TIMEZONE = 'Europe/Paris'
 
 DEFAULT_LANG = u'en'
 
-FEED_DOMAIN = 'http://leo-editor.github.io'
-SITEURL = 'http://leo-editor.github.io'
+FEED_DOMAIN = 'http://leo-editor.github.io/blog'
+SITEURL = 'http://leo-editor.github.io/blog'
 
 # Blogroll
 LINKS =  (('Leo project website', 'http://leoeditor.com/'),
@@ -29,5 +29,5 @@ DEFAULT_PAGINATION = 10
 
 # markdown config, see options at:
 #   http://docs.getpelican.com/en/3.3.0/settings.html
-#   http://pythonhosted.org/Markdown/extensions/ 
+#   http://pythonhosted.org/Markdown/extensions/
 MD_EXTENSIONS = (['codehilite(css_class=highlight)','extra', 'nl2br', 'sane_lists'])

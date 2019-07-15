@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo Blog - Ville Vainio</title><link href="http://leo-editor.github.io/blog/" rel="alternate"></link><link href="http://leo-editor.github.io/blog/feeds/ville-vainio.atom.xml" rel="self"></link><id>http://leo-editor.github.io/blog/</id><updated>2013-05-10T22:34:00+02:00</updated><entry><title>Valuespace, the spreadsheet in your outliner</title><link href="http://leo-editor.github.io/blog/valuespace-intro.html" rel="alternate"></link><published>2013-05-10T22:34:00+02:00</published><updated>2013-05-10T22:34:00+02:00</updated><author><name>Ville Vainio</name></author><id>tag:leo-editor.github.io,2013-05-10:/blog/valuespace-intro.html</id><summary type="html">&lt;p class="first last"&gt;Introducing the valuespace plugin&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Do you mostly use Leo as an outliner, &amp;quot;thought organizer&amp;quot; or data analysis tool? If so, this post can be useful to you. Valuespace won't help you much if you use Leo mostly as an IDE or code editor.&lt;/p&gt;
+&lt;p&gt;I could easily wax philosophical about the valuespace plugin, but I can do it in a later blog post. Here, I'll just go ahead and tell what it does.&lt;/p&gt;
+&lt;p&gt;Valuespace makes .leo document &lt;em&gt;executable&lt;/em&gt;, turning the whole leo document to one big python &amp;quot;script&amp;quot; that assigns values to variables, uses those values to execute computations, and renders values of computations in the document itself.&lt;/p&gt;
+&lt;p&gt;The way to tell leo to execute the current document is to run alt-x vs-update.&lt;/p&gt;
+&lt;div class="section" id="embed-scripts-in-body-text"&gt;
+&lt;h3&gt;Embed scripts in body text&lt;/h3&gt;
+&lt;p&gt;Clearly, it makes no sense to execute everything in a .leo document that mostly consists of human readable text. To mark a part of body text as executable, use &amp;#64;x in the beginning of line.&lt;/p&gt;
+&lt;p&gt;There are two variants of this. Single line statements look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;does&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;executed&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="n"&gt;follows&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Observant reader will not be surprised by what it does.&lt;/p&gt;
+&lt;p&gt;Running large swatches of text is a natural extension of this notation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Some&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;doesn&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t get executed&lt;/span&gt;
+
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+&lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;bar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;doesn&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t get executed&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that leo &amp;quot;tangling&amp;quot; (parsing of  &lt;cite&gt;&amp;lt;&amp;lt; section &amp;gt;&amp;gt;&lt;/cite&gt; blocks and &lt;cite&gt;&amp;#64;others&lt;/cite&gt; directives) is run on the executed script, so if you want to split your python code to a deeper Leo tree, you can do something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+        &lt;span class="nd"&gt;@others&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will interpret (and run) the subtree after doing the imports. For data analysis, you could e.g. have a first node called &amp;quot;prelude&amp;quot;, looking much like the snippet above, and in the subtree you could declare all the functions and classes used in the rest of the document.&lt;/p&gt;
+&lt;p&gt;Sometimes, you don't really want to run a block, but rather assign it
+to a python variable for further processing. This extension of &lt;cite&gt;&amp;#64;x&lt;/cite&gt; notation helps here:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;somevar&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="n"&gt;that&lt;/span&gt;
+&lt;span class="n"&gt;gets&lt;/span&gt; &lt;span class="n"&gt;assigned&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;somevar&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In consecutive script blocks, you would now be free to reference the python variable 'somevar'.&lt;/p&gt;
+&lt;p&gt;Now, sometimes the variable should be a list, and you want to accumulate blocks of text to that list. Further extension of the notation looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mylist&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;Ignored&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mylist&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, assuming &lt;cite&gt;mylist&lt;/cite&gt; was instantiated as a list earlier, this would produce the final value of mylist as&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;some text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;more text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="slurping-data-from-external-files"&gt;
+&lt;h3&gt;Slurping data from external files&lt;/h3&gt;
+&lt;p&gt;If you processing data, you often want it to reside outside .leo document in external files (and follow the history separately version control, etc.). Valuespace currently has built in support for JSON and
+yaml files.&lt;/p&gt;
+&lt;p&gt;Let's say you have JSON formatted data in foobar.json. To slurp in that data and store it in variable &amp;quot;foobar&amp;quot;, create a node with headline &lt;cite&gt;&amp;#64;vsi foobar.json&lt;/cite&gt;. &lt;cite&gt;&amp;#64;vsi&lt;/cite&gt; stands for &amp;quot;valuespace input&amp;quot;, and the extension .json instructs Leo to parse the file as json. For yaml files, use the extension .yaml.&lt;/p&gt;
+&lt;p&gt;Symmetrically, &lt;cite&gt;&amp;#64;vso foobar.json&lt;/cite&gt; instructs Leo to grab the value of variable 'foobar' and dump its value serialized as JSON to file 'foobar.json'&lt;/p&gt;
+&lt;p&gt;In addition to reading or writing the data, both &amp;#64;vsi and &amp;#64;vso store the data as read/writted in the body text of the node. If you edit the body text, the changes are silently overwritten the next time you do &lt;cite&gt;vs-update&lt;/cite&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="making-data-visible-in-the-outline"&gt;
+&lt;h3&gt;Making data visible in the outline&lt;/h3&gt;
+&lt;p&gt;It's often useful to display the data in your Leo outline. You can use &lt;cite&gt;&amp;#64;r expr&lt;/cite&gt; construct to evaluate a python expression and put the result of evaluation in the body of the node.&lt;/p&gt;
+&lt;p&gt;E.g.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;#64;r mystr.upper()&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+HELLO WORLD
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="anchors"&gt;
+&lt;h3&gt;Anchors&lt;/h3&gt;
+&lt;p&gt;To make valuespace scale to large Leo documents, not every node gets parsed for &amp;#64;x contstructs. To instruct vs-update to scan the body of a node for &amp;#64;x consructs, you need to add an &amp;quot;anchor&amp;quot; (node with &amp;#64;a as headline) as a child of that node. So your outline would look like this:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Foo&lt;/li&gt;
+&lt;li&gt;Bar&lt;ul&gt;
+&lt;li&gt;Baz&lt;/li&gt;
+&lt;li&gt;&amp;#64;a&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Quux&lt;/li&gt;
+&lt;li&gt;Xyzzy&lt;/li&gt;
+&lt;li&gt;&amp;#64;r myvar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here, only node &amp;quot;Bar&amp;quot; would have its body text scanned during vs-update. &lt;cite&gt;&amp;#64;r myvar&lt;/cite&gt; would get evaluated despite the lack of the anchor, since it's headline-level construct that doesn't require parsing of the body.&lt;/p&gt;
+&lt;p&gt;You can also give anchors a name; if you have an outline like this:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Foo&lt;/li&gt;
+&lt;li&gt;Bar&lt;ul&gt;
+&lt;li&gt;&amp;#64;a myvar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;the contents (body) of node &amp;quot;Bar&amp;quot; would get assigned to variable 'myvar' (as string), &lt;strong&gt;and&lt;/strong&gt; the body of node Bar gets scanned for &amp;#64;x tags.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="plugins"></category></entry></feed>

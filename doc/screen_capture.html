@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>screen_capture</title>
+        <link rel="stylesheet" href="http://leo-editor.github.io/blog/theme/css/main.css" />
+        <link href="http://leo-editor.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Leo Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://leo-editor.github.io/blog/">Leo Blog </a></h1>
+                <nav><ul>
+                    <li class="active"><a href="http://leo-editor.github.io/blog/category/plugins.html">plugins</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="http://leo-editor.github.io/blog/screen_capture.html" rel="bookmark"
+           title="Permalink to screen_capture">screen_capture</a></h1>
+    </header>
+
+    <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2013-04-20T00:00:00+02:00">
+                Published: Sat 20 April 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="http://leo-editor.github.io/blog/author/terry-brown.html">Terry Brown</a>
+        </address>
+<p>In <a href="http://leo-editor.github.io/blog/category/plugins.html">plugins</a>.</p>
+<p>tags: <a href="http://leo-editor.github.io/blog/tag/plugins.html">plugins</a> </p>
+</footer><!-- /.post-info -->      <p>Today I pushed a screen_capture plugin which adds two new
+commands to Leo, <tt class="docutils literal">screen_capture_now</tt> and <tt class="docutils literal">screen_capture_5sec</tt>.
+A PNG image of the main Leo window, without window manager decorations,
+is saved in <tt class="docutils literal"><span class="pre">$HOME/.leo/screen_captures/YYYY-MM-DDTHH:MM:SS.png</span></tt>
+Here's an example:</p>
+<img alt="" src="/static/images/plugins/screen_capture/screen_capture0.png" />
+<p><tt class="docutils literal">screen_capture_now</tt> captures an image immediately,
+<tt class="docutils literal">screen_capture_5sec</tt> waits five seconds, so you can position the
+pointer, open menus etc.  The only feedback is in the console, as
+messages in the log would be distracting in the captured image.</p>
+<p>Oddly enough, all through development (this project started at the 2013
+Leo Sprint), the mouse pointer was not captured. This is not at all
+unusual for screen capture software. The plugin includes code to draw a
+pointer (from <tt class="docutils literal"><span class="pre">.../Icons/recorder/pointer.png</span></tt>) on the grabbed image.
+But at time of writing the pointer is being captured, and that code is
+disabled. My guess is the pointer won't be captured in all environments
+and a <tt class="docutils literal">&#64;setting</tt> will be needed to enable pointer drawing by the
+plugin.</p>
+
+    </div><!-- /.entry-content -->
+
+  </article>
+</section>
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://leoeditor.com/">Leo project website</a></li>
+                            <li><a href="https://groups.google.com/forum/?fromgroups#!forum/leo-editor">Leo community mailing list</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://leo-editor.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Leo Blog</title><link href="http://leo-editor.github.io/blog/" rel="alternate"></link><link href="http://leo-editor.github.io/blog/feeds/all-en.atom.xml" rel="self"></link><id>http://leo-editor.github.io/blog/</id><updated>2013-11-04T00:00:00+01:00</updated><entry><title>Nodewatch for Productivity</title><link href="http://leo-editor.github.io/blog/nodewatch_productivity.html" rel="alternate"></link><published>2013-11-04T00:00:00+01:00</published><updated>2013-11-04T00:00:00+01:00</updated><author><name>Jacob Peck</name></author><id>tag:leo-editor.github.io,2013-11-04:/blog/nodewatch_productivity.html</id><summary type="html">&lt;p class="first last"&gt;Using nodewatch.py (with todo.py) for productivity&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Over on my personal blog, I've posted a &lt;a class="reference external" href="http://blog.suspended-chord.info/2013/11/04/nodewatch-for-productivity/"&gt;quick example of how I use nodewatch.py to stay productive&lt;/a&gt;.&lt;/p&gt;
+</content><category term="plugins"></category></entry><entry><title>Leo editor bookmarks plugin demo on Vimeo</title><link href="http://leo-editor.github.io/blog/bookmarks_video.html" rel="alternate"></link><published>2013-10-24T00:00:00+02:00</published><updated>2013-10-24T00:00:00+02:00</updated><author><name>Terry Brown</name></author><id>tag:leo-editor.github.io,2013-10-24:/blog/bookmarks_video.html</id><summary type="html">&lt;p class="first last"&gt;A video demonstrating the use of bookmarks.py&lt;/p&gt;
+</summary><content type="html">&lt;iframe src="//player.vimeo.com/video/77720098" width="500" height="363" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt; &lt;p&gt;&lt;a href="http://vimeo.com/77720098"&gt;Leo editor bookmarks plugin demo.&lt;/a&gt; from &lt;a href="http://vimeo.com/user8438028"&gt;Terry Brown&lt;/a&gt; on &lt;a href="https://vimeo.com"&gt;Vimeo&lt;/a&gt;.&lt;/p&gt;</content><category term="plugins"></category></entry><entry><title>Custom Printing with printing.py</title><link href="http://leo-editor.github.io/blog/custom_printing.html" rel="alternate"></link><published>2013-09-20T00:00:00+02:00</published><updated>2013-09-20T00:00:00+02:00</updated><author><name>Jacob Peck</name></author><id>tag:leo-editor.github.io,2013-09-20:/blog/custom_printing.html</id><summary type="html">&lt;p class="first last"&gt;Print custom documents with Leo's printing plugin&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Printing with the printing.py plugin is fairly simple, and decently flexible.  However, sometimes you want more fine-grained control over the output of your print job.  For these situations, you can use a script.&lt;/p&gt;
+&lt;div class="section" id="step-0-get-your-imports-right"&gt;
+&lt;h2&gt;Step 0: Get your imports right&lt;/h2&gt;
+&lt;p&gt;We'll be using stuff from PyQt for this, specifically QtGui.  Be sure to import them at the top of your script:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+from PyQt4 import QtGui
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-1-creating-your-document"&gt;
+&lt;h2&gt;Step 1: Creating your Document&lt;/h2&gt;
+&lt;p&gt;Printing in Leo is handled by PyQt, which provides nice tools for printing QTextDocuments, which are in turn just HTML documents wrapped in a special object.&lt;/p&gt;
+&lt;p&gt;To that effect, we create our document (what follows is just a minimal example):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+mydoc = '''
+&amp;lt;html&amp;gt;
+&amp;lt;h1&amp;gt;Hello!&amp;lt;/h1&amp;gt;
+&amp;lt;p&amp;gt;Documents to be printed in Leo are just HTML documents, wrapped up in a QTextDocument object.&amp;lt;/p&amp;gt;
+&amp;lt;/html&amp;gt;
+'''
+&lt;/pre&gt;
+&lt;p&gt;Note that the above string can be &lt;em&gt;any&lt;/em&gt; valid HTML.&lt;/p&gt;
+&lt;p&gt;And then we wrap it in a QTextDocument:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+qtextdoc = QtGui.QTextDocument()
+qtextdoc.setHtml(mydoc)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="step-2-print-it"&gt;
+&lt;h2&gt;Step 2: Print it!&lt;/h2&gt;
+&lt;p&gt;Finally, we use the printing.py plugin to preview the document to be printed:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+c.thePrintingController.print_preview_doc(qtextdoc)
+&lt;/pre&gt;
+&lt;p&gt;You can see how the document would look when printed, and if you're satisfied, you can click on the print button from here.  If not, close the dialog, and nothing will be printed.  Easy as pie!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-full-script"&gt;
+&lt;h2&gt;The full script&lt;/h2&gt;
+&lt;p&gt;Here's the full script:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+&amp;#64;language python
+ from PyQt4 import QtGui
+
+ mydoc = '''
+ &amp;lt;html&amp;gt;
+ &amp;lt;h1&amp;gt;Hello!&amp;lt;/h1&amp;gt;
+ &amp;lt;p&amp;gt;Documents to be printed in Leo are just HTML documents, wrapped up in a QTextDocument object.&amp;lt;/p&amp;gt;
+ &amp;lt;/html&amp;gt;
+ '''
+
+ qtextdoc = QtGui.QTextDocument()
+ qtextdoc.setHtml(mydoc)
+
+ c.thePrintingController.print_preview_doc(qtextdoc)
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="optional-stylesheets"&gt;
+&lt;h2&gt;Optional: Stylesheets&lt;/h2&gt;
+&lt;p&gt;QTextDocuments can be styled by CSS stylesheets, if you desire.  You can incorporate those with a call to qtextdoc.setDefaultStyleSheet, which takes in a string.  For example:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+css = '''
+h1 {color: #f00}
+p {color: #0f0}
+'''
+qtextdoc.setDefaultStyleSheet(css)
+&lt;/pre&gt;
+&lt;/div&gt;
+</content><category term="plugins"></category></entry><entry><title>Valuespace, the spreadsheet in your outliner</title><link href="http://leo-editor.github.io/blog/valuespace-intro.html" rel="alternate"></link><published>2013-05-10T22:34:00+02:00</published><updated>2013-05-10T22:34:00+02:00</updated><author><name>Ville Vainio</name></author><id>tag:leo-editor.github.io,2013-05-10:/blog/valuespace-intro.html</id><summary type="html">&lt;p class="first last"&gt;Introducing the valuespace plugin&lt;/p&gt;
+</summary><content type="html">&lt;div class="section" id="introduction"&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Do you mostly use Leo as an outliner, &amp;quot;thought organizer&amp;quot; or data analysis tool? If so, this post can be useful to you. Valuespace won't help you much if you use Leo mostly as an IDE or code editor.&lt;/p&gt;
+&lt;p&gt;I could easily wax philosophical about the valuespace plugin, but I can do it in a later blog post. Here, I'll just go ahead and tell what it does.&lt;/p&gt;
+&lt;p&gt;Valuespace makes .leo document &lt;em&gt;executable&lt;/em&gt;, turning the whole leo document to one big python &amp;quot;script&amp;quot; that assigns values to variables, uses those values to execute computations, and renders values of computations in the document itself.&lt;/p&gt;
+&lt;p&gt;The way to tell leo to execute the current document is to run alt-x vs-update.&lt;/p&gt;
+&lt;div class="section" id="embed-scripts-in-body-text"&gt;
+&lt;h3&gt;Embed scripts in body text&lt;/h3&gt;
+&lt;p&gt;Clearly, it makes no sense to execute everything in a .leo document that mostly consists of human readable text. To mark a part of body text as executable, use &amp;#64;x in the beginning of line.&lt;/p&gt;
+&lt;p&gt;There are two variants of this. Single line statements look like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;does&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;executed&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="n"&gt;follows&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Observant reader will not be surprised by what it does.&lt;/p&gt;
+&lt;p&gt;Running large swatches of text is a natural extension of this notation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;Some&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;doesn&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t get executed&lt;/span&gt;
+
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+
+&lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="n"&gt;bar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;foo&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="n"&gt;that&lt;/span&gt; &lt;span class="n"&gt;doesn&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;t get executed&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Note that leo &amp;quot;tangling&amp;quot; (parsing of  &lt;cite&gt;&amp;lt;&amp;lt; section &amp;gt;&amp;gt;&lt;/cite&gt; blocks and &lt;cite&gt;&amp;#64;others&lt;/cite&gt; directives) is run on the executed script, so if you want to split your python code to a deeper Leo tree, you can do something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+        &lt;span class="nd"&gt;@others&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will interpret (and run) the subtree after doing the imports. For data analysis, you could e.g. have a first node called &amp;quot;prelude&amp;quot;, looking much like the snippet above, and in the subtree you could declare all the functions and classes used in the rest of the document.&lt;/p&gt;
+&lt;p&gt;Sometimes, you don't really want to run a block, but rather assign it
+to a python variable for further processing. This extension of &lt;cite&gt;&amp;#64;x&lt;/cite&gt; notation helps here:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;somevar&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="n"&gt;that&lt;/span&gt;
+&lt;span class="n"&gt;gets&lt;/span&gt; &lt;span class="n"&gt;assigned&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;somevar&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In consecutive script blocks, you would now be free to reference the python variable 'somevar'.&lt;/p&gt;
+&lt;p&gt;Now, sometimes the variable should be a list, and you want to accumulate blocks of text to that list. Further extension of the notation looks like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mylist&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;some&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="n"&gt;Ignored&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;mylist&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="n"&gt;more&lt;/span&gt; &lt;span class="n"&gt;text&lt;/span&gt;
+&lt;span class="nd"&gt;@x&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now, assuming &lt;cite&gt;mylist&lt;/cite&gt; was instantiated as a list earlier, this would produce the final value of mylist as&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;some text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;more text&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="slurping-data-from-external-files"&gt;
+&lt;h3&gt;Slurping data from external files&lt;/h3&gt;
+&lt;p&gt;If you processing data, you often want it to reside outside .leo document in external files (and follow the history separately version control, etc.). Valuespace currently has built in support for JSON and
+yaml files.&lt;/p&gt;
+&lt;p&gt;Let's say you have JSON formatted data in foobar.json. To slurp in that data and store it in variable &amp;quot;foobar&amp;quot;, create a node with headline &lt;cite&gt;&amp;#64;vsi foobar.json&lt;/cite&gt;. &lt;cite&gt;&amp;#64;vsi&lt;/cite&gt; stands for &amp;quot;valuespace input&amp;quot;, and the extension .json instructs Leo to parse the file as json. For yaml files, use the extension .yaml.&lt;/p&gt;
+&lt;p&gt;Symmetrically, &lt;cite&gt;&amp;#64;vso foobar.json&lt;/cite&gt; instructs Leo to grab the value of variable 'foobar' and dump its value serialized as JSON to file 'foobar.json'&lt;/p&gt;
+&lt;p&gt;In addition to reading or writing the data, both &amp;#64;vsi and &amp;#64;vso store the data as read/writted in the body text of the node. If you edit the body text, the changes are silently overwritten the next time you do &lt;cite&gt;vs-update&lt;/cite&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="making-data-visible-in-the-outline"&gt;
+&lt;h3&gt;Making data visible in the outline&lt;/h3&gt;
+&lt;p&gt;It's often useful to display the data in your Leo outline. You can use &lt;cite&gt;&amp;#64;r expr&lt;/cite&gt; construct to evaluate a python expression and put the result of evaluation in the body of the node.&lt;/p&gt;
+&lt;p&gt;E.g.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&amp;#64;r mystr.upper()&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+HELLO WORLD
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="anchors"&gt;
+&lt;h3&gt;Anchors&lt;/h3&gt;
+&lt;p&gt;To make valuespace scale to large Leo documents, not every node gets parsed for &amp;#64;x contstructs. To instruct vs-update to scan the body of a node for &amp;#64;x consructs, you need to add an &amp;quot;anchor&amp;quot; (node with &amp;#64;a as headline) as a child of that node. So your outline would look like this:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Foo&lt;/li&gt;
+&lt;li&gt;Bar&lt;ul&gt;
+&lt;li&gt;Baz&lt;/li&gt;
+&lt;li&gt;&amp;#64;a&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Quux&lt;/li&gt;
+&lt;li&gt;Xyzzy&lt;/li&gt;
+&lt;li&gt;&amp;#64;r myvar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here, only node &amp;quot;Bar&amp;quot; would have its body text scanned during vs-update. &lt;cite&gt;&amp;#64;r myvar&lt;/cite&gt; would get evaluated despite the lack of the anchor, since it's headline-level construct that doesn't require parsing of the body.&lt;/p&gt;
+&lt;p&gt;You can also give anchors a name; if you have an outline like this:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Foo&lt;/li&gt;
+&lt;li&gt;Bar&lt;ul&gt;
+&lt;li&gt;&amp;#64;a myvar&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;the contents (body) of node &amp;quot;Bar&amp;quot; would get assigned to variable 'myvar' (as string), &lt;strong&gt;and&lt;/strong&gt; the body of node Bar gets scanned for &amp;#64;x tags.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</content><category term="plugins"></category></entry><entry><title>screen_capture</title><link href="http://leo-editor.github.io/blog/screen_capture.html" rel="alternate"></link><published>2013-04-20T00:00:00+02:00</published><updated>2013-04-20T00:00:00+02:00</updated><author><name>Terry Brown</name></author><id>tag:leo-editor.github.io,2013-04-20:/blog/screen_capture.html</id><summary type="html">&lt;p class="first last"&gt;Captures images of the Leo window&lt;/p&gt;
+</summary><content type="html">&lt;p&gt;Today I pushed a screen_capture plugin which adds two new
+commands to Leo, &lt;tt class="docutils literal"&gt;screen_capture_now&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;screen_capture_5sec&lt;/tt&gt;.
+A PNG image of the main Leo window, without window manager decorations,
+is saved in &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;$HOME/.leo/screen_captures/YYYY-MM-DDTHH:MM:SS.png&lt;/span&gt;&lt;/tt&gt;
+Here's an example:&lt;/p&gt;
+&lt;img alt="" src="/static/images/plugins/screen_capture/screen_capture0.png" /&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;screen_capture_now&lt;/tt&gt; captures an image immediately,
+&lt;tt class="docutils literal"&gt;screen_capture_5sec&lt;/tt&gt; waits five seconds, so you can position the
+pointer, open menus etc.  The only feedback is in the console, as
+messages in the log would be distracting in the captured image.&lt;/p&gt;
+&lt;p&gt;Oddly enough, all through development (this project started at the 2013
+Leo Sprint), the mouse pointer was not captured. This is not at all
+unusual for screen capture software. The plugin includes code to draw a
+pointer (from &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;.../Icons/recorder/pointer.png&lt;/span&gt;&lt;/tt&gt;) on the grabbed image.
+But at time of writing the pointer is being captured, and that code is
+disabled. My guess is the pointer won't be captured in all environments
+and a &lt;tt class="docutils literal"&gt;&amp;#64;setting&lt;/tt&gt; will be needed to enable pointer drawing by the
+plugin.&lt;/p&gt;
+</content><category term="plugins"></category></entry></feed>

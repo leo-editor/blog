@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Leo Blog - Ville Vainio</title>
+        <link rel="stylesheet" href="http://leo-editor.github.io/blog/theme/css/main.css" />
+        <link href="http://leo-editor.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Leo Blog Atom Feed" />
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://leo-editor.github.io/blog/">Leo Blog </a></h1>
+                <nav><ul>
+                    <li><a href="http://leo-editor.github.io/blog/category/plugins.html">plugins</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="http://leo-editor.github.io/blog/valuespace-intro.html">Valuespace, the spreadsheet in your outliner</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2013-05-10T22:34:00+02:00">
+                Published: Fri 10 May 2013
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="http://leo-editor.github.io/blog/author/ville-vainio.html">Ville Vainio</a>
+        </address>
+<p>In <a href="http://leo-editor.github.io/blog/category/plugins.html">plugins</a>.</p>
+<p>tags: <a href="http://leo-editor.github.io/blog/tag/plugins.html">plugins</a> </p>
+</footer><!-- /.post-info --><div class="section" id="introduction">
+<h2>Introduction</h2>
+<p>Do you mostly use Leo as an outliner, &quot;thought organizer&quot; or data analysis tool? If so, this post can be useful to you. Valuespace won't help you much if you use Leo mostly as an IDE or code editor.</p>
+<p>I could easily wax philosophical about the valuespace plugin, but I can do it in a later blog post. Here, I'll just go ahead and tell what it does.</p>
+<p>Valuespace makes .leo document <em>executable</em>, turning the whole leo document to one big python &quot;script&quot; that assigns values to variables, uses those values to execute computations, and renders values of computations in the document itself.</p>
+<p>The way to tell leo to execute the current document is to run alt-x vs-update.</p>
+<div class="section" id="embed-scripts-in-body-text">
+<h3>Embed scripts in body text</h3>
+<p>Clearly, it makes no sense to execute everything in a .leo document that mostly consists of human readable text. To mark a part of body text as executable, use &#64;x in the beginning of line.</p>
+<p>There are two variants of this. Single line statements look like this:</p>
+<div class="highlight"><pre><span></span><span class="n">This</span> <span class="ow">is</span> <span class="n">some</span> <span class="n">text</span>
+<span class="n">that</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">get</span> <span class="n">executed</span>
+<span class="nd">@x</span> <span class="n">foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">more</span> <span class="n">text</span> <span class="n">follows</span>
+</pre></div>
+<p>Observant reader will not be surprised by what it does.</p>
+<p>Running large swatches of text is a natural extension of this notation:</p>
+<div class="highlight"><pre><span></span><span class="n">Some</span> <span class="n">text</span> <span class="n">that</span> <span class="n">doesn</span><span class="s1">&#39;t get executed</span>
+
+<span class="nd">@x</span> <span class="p">{</span>
+
+<span class="n">foo</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">bar</span> <span class="o">=</span> <span class="n">foo</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="nd">@x</span> <span class="p">}</span>
+
+<span class="n">more</span> <span class="n">text</span> <span class="n">that</span> <span class="n">doesn</span><span class="s1">&#39;t get executed</span>
+</pre></div>
+<p>Note that leo &quot;tangling&quot; (parsing of  <cite>&lt;&lt; section &gt;&gt;</cite> blocks and <cite>&#64;others</cite> directives) is run on the executed script, so if you want to split your python code to a deeper Leo tree, you can do something like this:</p>
+<div class="highlight"><pre><span></span><span class="nd">@x</span> <span class="p">{</span>
+        <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+        <span class="nd">@others</span>
+<span class="nd">@x</span> <span class="p">}</span>
+</pre></div>
+<p>This will interpret (and run) the subtree after doing the imports. For data analysis, you could e.g. have a first node called &quot;prelude&quot;, looking much like the snippet above, and in the subtree you could declare all the functions and classes used in the rest of the document.</p>
+<p>Sometimes, you don't really want to run a block, but rather assign it
+to a python variable for further processing. This extension of <cite>&#64;x</cite> notation helps here:</p>
+<div class="highlight"><pre><span></span><span class="nd">@x</span> <span class="o">=</span><span class="n">somevar</span> <span class="p">{</span>
+<span class="n">text</span>
+<span class="n">that</span>
+<span class="n">gets</span> <span class="n">assigned</span> <span class="n">to</span> <span class="s1">&#39;somevar&#39;</span>
+<span class="k">as</span> <span class="n">string</span>
+<span class="nd">@x</span> <span class="p">}</span>
+</pre></div>
+<p>In consecutive script blocks, you would now be free to reference the python variable 'somevar'.</p>
+<p>Now, sometimes the variable should be a list, and you want to accumulate blocks of text to that list. Further extension of the notation looks like this:</p>
+<div class="highlight"><pre><span></span><span class="nd">@x</span> <span class="o">=</span><span class="n">mylist</span><span class="o">+</span> <span class="p">{</span>
+<span class="n">some</span> <span class="n">text</span>
+<span class="nd">@x</span> <span class="p">}</span>
+
+<span class="n">Ignored</span> <span class="n">text</span>
+
+<span class="nd">@x</span> <span class="o">=</span><span class="n">mylist</span><span class="o">+</span> <span class="p">{</span>
+<span class="n">more</span> <span class="n">text</span>
+<span class="nd">@x</span> <span class="p">}</span>
+</pre></div>
+<p>Now, assuming <cite>mylist</cite> was instantiated as a list earlier, this would produce the final value of mylist as</p>
+<div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;some text&#39;</span><span class="p">,</span> <span class="s1">&#39;more text&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="slurping-data-from-external-files">
+<h3>Slurping data from external files</h3>
+<p>If you processing data, you often want it to reside outside .leo document in external files (and follow the history separately version control, etc.). Valuespace currently has built in support for JSON and
+yaml files.</p>
+<p>Let's say you have JSON formatted data in foobar.json. To slurp in that data and store it in variable &quot;foobar&quot;, create a node with headline <cite>&#64;vsi foobar.json</cite>. <cite>&#64;vsi</cite> stands for &quot;valuespace input&quot;, and the extension .json instructs Leo to parse the file as json. For yaml files, use the extension .yaml.</p>
+<p>Symmetrically, <cite>&#64;vso foobar.json</cite> instructs Leo to grab the value of variable 'foobar' and dump its value serialized as JSON to file 'foobar.json'</p>
+<p>In addition to reading or writing the data, both &#64;vsi and &#64;vso store the data as read/writted in the body text of the node. If you edit the body text, the changes are silently overwritten the next time you do <cite>vs-update</cite>.</p>
+</div>
+<div class="section" id="making-data-visible-in-the-outline">
+<h3>Making data visible in the outline</h3>
+<p>It's often useful to display the data in your Leo outline. You can use <cite>&#64;r expr</cite> construct to evaluate a python expression and put the result of evaluation in the body of the node.</p>
+<p>E.g.</p>
+<p><strong>&#64;r mystr.upper()</strong></p>
+<pre class="literal-block">
+HELLO WORLD
+</pre>
+</div>
+<div class="section" id="anchors">
+<h3>Anchors</h3>
+<p>To make valuespace scale to large Leo documents, not every node gets parsed for &#64;x contstructs. To instruct vs-update to scan the body of a node for &#64;x consructs, you need to add an &quot;anchor&quot; (node with &#64;a as headline) as a child of that node. So your outline would look like this:</p>
+<ul class="simple">
+<li>Foo</li>
+<li>Bar<ul>
+<li>Baz</li>
+<li>&#64;a</li>
+</ul>
+</li>
+<li>Quux</li>
+<li>Xyzzy</li>
+<li>&#64;r myvar</li>
+</ul>
+<p>Here, only node &quot;Bar&quot; would have its body text scanned during vs-update. <cite>&#64;r myvar</cite> would get evaluated despite the lack of the anchor, since it's headline-level construct that doesn't require parsing of the body.</p>
+<p>You can also give anchors a name; if you have an outline like this:</p>
+<ul class="simple">
+<li>Foo</li>
+<li>Bar<ul>
+<li>&#64;a myvar</li>
+</ul>
+</li>
+</ul>
+<p>the contents (body) of node &quot;Bar&quot; would get assigned to variable 'myvar' (as string), <strong>and</strong> the body of node Bar gets scanned for &#64;x tags.</p>
+</div>
+</div>
+                </article>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="http://leoeditor.com/">Leo project website</a></li>
+                            <li><a href="https://groups.google.com/forum/?fromgroups#!forum/leo-editor">Leo community mailing list</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://leo-editor.github.io/blog/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+</body>
+</html>
